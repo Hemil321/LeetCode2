@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool equalFrequency(string word) {
+        unordered_map<char, int> freqMap;
+        for(auto& j:word){
+            freqMap[j]++;
+        }
+        for(auto& j:word){
+            freqMap[j]--;
+            unordered_set<int> freqs;
+            for(auto& j:freqMap){
+                if(j.second != 0){
+                    freqs.insert(j.second);
+                }
+            }
+            if(freqs.size() == 1) return true;
+            freqMap[j]++;
+        }
+        return false;
+    }
+};
