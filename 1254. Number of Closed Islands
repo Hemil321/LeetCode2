@@ -1,0 +1,42 @@
+class Solution {
+    set<pair<int, int>> frontier;
+    int dx[4] = {-1, 0, 1, 0};
+    int dy[4] = {0, -1, 0, 1};
+    
+    void getIsland(vector<vector<int>>& grid, int i, int j, int m, int n){
+        grid[i][j] = 2;
+        for(int k = 0; k < 4; k++){
+            int row = i + dx[k];
+            int col = j + dy[k];
+            if(row < 0 || row >= m || col < 0 || col >= n) continue;
+            if(grid[row][col] == 1){
+                frontier.insert({i, j});
+            }
+            if(grid[row][col] == 0){
+                getIsland(grid, row, col, m, n);
+            }
+        }
+    }
+public:
+    int closedIsland(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size(), ans = 0;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 0){
+                    getIsland(grid, i, j, m, n);
+                    bool isClosed = true;
+                    for(auto& j:frontier){
+                        int row = j.first, col = j.second;
+                        if(row == 0 || col == 0 || row == m - 1 || col == n - 1){
+                            isClosed = false;
+                            break;
+                        }
+                    }
+                    if(isClosed && i != 0 && j != 0 && i != m - 1 && j != n - 1) ans++;
+                    frontier.clear();
+                }
+            }
+        }
+        return ans;
+    }
+};
