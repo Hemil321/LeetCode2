@@ -1,0 +1,24 @@
+class LUPrefix {
+    vector<int> vids;
+    int l = 0, n;
+public:
+    LUPrefix(int n) {
+        vids.resize(n);
+        this -> n = n;
+    }
+    
+    void upload(int video) {
+        vids[video - 1] = 1;
+        for(int i = l; i < n; i++){
+            if(vids[i] == 1){
+                l++;
+            }else{
+                break;
+            }
+        }
+    }
+    
+    int longest() {
+        return l;
+    }
+};
