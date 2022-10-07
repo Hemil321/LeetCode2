@@ -1,0 +1,25 @@
+bool comp(const vector<int>& a, const vector<int>& b){
+    return a[0] == b[0] ? a[1] > b[1] : a[0] > b[0]; 
+}
+
+class Solution {
+public:
+    vector<int> filterRestaurants(vector<vector<int>>& r, int vf, int mp, int md) {
+        vector<vector<int>> considered;
+        int i = 1;
+        for(auto& j:r){
+            if(vf == 1 && j[2] == 1 && j[3] <= mp && j[4] <= md){
+                considered.push_back({j[1], j[0]});
+            }else if(vf == 0 && j[3] <= mp && j[4] <= md){
+                considered.push_back({j[1], j[0]});
+            }
+            i++;
+        }
+        sort(begin(considered), end(considered), comp);
+        vector<int> ans;
+        for(auto& j:considered){
+            ans.push_back(j[1]);
+        }
+        return ans;
+    }
+};
