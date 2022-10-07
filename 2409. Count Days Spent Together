@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int countDaysTogether(string arriveAlice, string leaveAlice, string arriveBob, string leaveBob) {
+        vector<int> prefix(13);
+        prefix[1] = 31;
+        for(int i = 2; i <= 12; i++){
+            if(i == 2){
+                prefix[i] += prefix[i - 1] + 28;
+            }else if(i == 3 || i == 5 || i == 7 || i == 8 || i == 10 || i == 12){
+                prefix[i] += prefix[i - 1] + 31;
+            }else{
+                prefix[i] += prefix[i - 1] + 30;
+            }
+        }
+        unordered_set<int> days;
+        int ans = 0;
+        int start = prefix[stoi(arriveAlice.substr(0, 2)) - 1] + stoi(arriveAlice.substr(3));
+        int end = prefix[stoi(leaveAlice.substr(0, 2)) - 1] + stoi(leaveAlice.substr(3));
+        for(int i = start; i <= end; i++){
+            days.insert(i);
+        }
+        start = prefix[stoi(arriveBob.substr(0, 2)) - 1] + stoi(arriveBob.substr(3));
+        end = prefix[stoi(leaveBob.substr(0, 2)) - 1] + stoi(leaveBob.substr(3));
+        for(int i = start; i <= end; i++){
+            if(days.count(i)) ans++;
+        }
+        return ans;
+    }
+};
