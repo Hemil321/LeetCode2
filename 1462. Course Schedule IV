@@ -1,0 +1,32 @@
+class Solution {
+    int isReachable[101][101];
+    
+    void dfs(vector<vector<int>>& adjList, int visited[], int i, int j){
+        isReachable[i][j] = 1;
+        visited[j] = 1;
+        for(auto& k:adjList[j]){
+            if(!visited[k]){
+                dfs(adjList, visited, i, k);
+            }
+        }
+    }
+    
+public:
+    vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& prereq, vector<vector<int>>& queries) {
+        memset(isReachable, 0, sizeof isReachable);
+        vector<vector<int>> adjList(n);
+        for(auto& j:prereq){
+            adjList[j[0]].push_back(j[1]);
+        }
+        for(int i = 0; i < n; i++){
+            int visited[n];
+            memset(visited, 0, sizeof visited);
+            dfs(adjList, visited, i, i);
+        }
+        vector<bool> ans;
+        for(auto& q:queries){
+            ans.push_back(isReachable[q[0]][q[1]]);
+        }
+        return ans;
+    }
+};
