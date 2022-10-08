@@ -1,0 +1,24 @@
+class Solution {
+    int ans;
+    pair<int, int> solve(TreeNode* root){
+        if(!root) return {0, 0};
+        pair<int, int> x = {root -> val, 1};
+        {
+            pair<int, int> y = solve(root -> left);
+            x.first += y.first;
+            x.second += y.second;
+        }
+        {
+            pair<int, int> y = solve(root -> right);
+            x.first += y.first;
+            x.second += y.second;
+        }
+        if(x.first / x.second == root -> val) ans++;
+        return x;
+    }
+public:
+    int averageOfSubtree(TreeNode* root) {
+        solve(root);
+        return ans;
+    }
+};
