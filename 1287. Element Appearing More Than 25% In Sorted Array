@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int findSpecialInteger(vector<int>& arr) {
+        int n = arr.size(), count = 1, ans = -1;
+        for(int i = 1; i < n; i++){
+            if(arr[i] != arr[i - 1]){
+                if((1.0 * count / n * 100) > 25) {
+                    ans = arr[i - 1];
+                    break;
+                }
+                count = 0;
+            }
+            count++;
+        }
+        if(ans == -1 && (1.0 * count / n * 100) > 25) ans = arr.back();
+        return ans;
+    }
+};
