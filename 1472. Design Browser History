@@ -1,0 +1,45 @@
+struct Node{
+    string page;
+    Node* prev;
+    Node* next;
+    
+    Node(){
+        prev = next = NULL;
+    }
+    
+    Node(string _page){
+        page = _page;
+        prev = next = NULL;
+    }
+};
+
+class BrowserHistory {
+    Node* root; 
+    Node* curr;
+public:
+    BrowserHistory(string homepage) {
+        root = new Node(homepage);
+        curr = root;
+    }
+    
+    void visit(string url) {
+        Node* _page = new Node(url);
+        curr -> next = _page;
+        _page -> prev = curr;
+        curr = _page;
+    }
+    
+    string back(int steps) {
+        while(curr != root && steps--){
+            curr = curr -> prev;
+        }
+        return curr -> page;        
+    }
+    
+    string forward(int steps) {
+        while(curr -> next && steps--){
+            curr = curr -> next;
+        }
+        return curr -> page;   
+    }
+};
