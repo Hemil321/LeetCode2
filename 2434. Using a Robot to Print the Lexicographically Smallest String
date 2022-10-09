@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string robotWithString(string s) {
+        priority_queue<pair<char, int>, vector<pair<char, int>>, greater<pair<char, int>>> pq;
+        for(int i = 0; i < s.length(); i++){
+            pq.push({s[i], i});
+        }
+        string ans, left;
+        int curr = 0;
+        while(!pq.empty()){
+            int idx = pq.top().second;
+            char ch = pq.top().first;
+            pq.pop();
+            if(curr > idx) continue;
+            while(left.size() > 0 && left.back() <= ch){
+                ans.push_back(left.back());
+                left.pop_back();
+            }
+            ans.push_back(ch);
+            for(int i = curr; i < idx; i++){
+                left.push_back(s[i]);
+            }
+            curr = idx + 1;
+        }
+        for(int i = left.length() - 1; i >= 0; i--){
+            ans.push_back(left[i]);
+        }
+        return ans;
+    }
+};
