@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int hardestWorker(int n, vector<vector<int>>& logs) {
+        vector<int> times(n);
+        int prev = 0;
+        for(auto& j:logs){
+            times[j[0]] = max(times[j[0]], j[1] - prev);
+            prev = j[1];
+        }
+        int ans = 0, mx = INT_MIN;
+        for(int i = 0; i < n; i++){
+            if(times[i] > mx){
+                mx = times[i];
+                ans = i;
+            }
+        }
+        return ans;
+    }
+};
