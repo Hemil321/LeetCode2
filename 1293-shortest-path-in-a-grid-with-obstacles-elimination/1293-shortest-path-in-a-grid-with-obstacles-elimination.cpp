@@ -4,7 +4,7 @@ public:
         int dirs[] = {0, 1, 0, -1, 0};
         int rows = grid.size(), cols = grid[0].size();
         if(k >= rows + cols - 2) return rows + cols - 2;
-        vector<vector<vector<bool>>> visited(vector<vector<vector<bool>>>(rows, vector<vector<bool>>(cols, vector<bool> (k + 1))));
+        vector<vector<vector<bool>>> visited(rows, vector<vector<bool>>(cols, vector<bool> (k + 1)));
         queue<vector<int>> q;
         q.push({0, 0, k, 0});
         visited[0][0][k] = 1;
@@ -17,7 +17,7 @@ public:
                 int nr = r + dirs[i], nc = c + dirs[i + 1];
                 if(nr < 0 || nr == rows || nc < 0 || nc == cols) continue;
                 int newK = currK - grid[nr][nc];
-                while(newK >= 0 && !visited[nr][nc][newK]){
+                if(newK >= 0 && !visited[nr][nc][newK]){
                     visited[nr][nc][newK] = 1;
                     q.push({nr, nc, newK, dist + 1});
                 }
